@@ -5,11 +5,15 @@ import MyPosts from "./MyPosts/MyPosts";
 
 
 const Profile = () => {
-    return <div className={styles.content}>
-        <div><img src={content} alt="content"/></div>
-        <div>ava + description</div>
-        <MyPosts />
-    </div>
+    return (
+        <div>
+            <div className={styles.content}>
+                <img src={content} alt="content"/>
+            </div>
+            <div>ava + description</div>
+            <MyPosts/>
+        </div>
+    )
 }
 
 export default Profile;
