@@ -4,14 +4,14 @@
 }
 
 .dialog {
-
+    text-decoration: none;
 }
 
 .dialogsItems {
     padding: 10px;
 }
 
-.dialogsItems .active {
+.dialogsItems a.active {
     color: gold;
 }
 
