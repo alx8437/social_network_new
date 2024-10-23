@@ -4,17 +4,17 @@ import {FC} from "react";
 
 type PostPropsType = {
     message: string
-    likeCount: number
+    likesCount: number
 }
 
 const Post: FC<PostPropsType> = (props) => {
-    const { message, likeCount } = props;
+    const { message, likesCount } = props;
 
     return  (
         <div className={styles.item}>
             <img src={avatar} alt="avatar" />
             {message}
-            <div><span>likes {likeCount}</span></div>
+            <div><span>likes {likesCount}</span></div>
         </div>
     )
 }
