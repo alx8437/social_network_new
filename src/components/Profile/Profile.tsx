@@ -1,13 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
+import {TPost} from "../../index";
 
+type TProfilePropsType = {
+    postsData: Array<TPost>
+}
 
-const Profile = () => {
+const Profile:FC<TProfilePropsType> = ({postsData}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts/>
+            <MyPosts postsData={postsData}/>
         </div>
     )
 }

@@ -1,12 +1,13 @@
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {v1} from "uuid";
+import {TPost} from "../../../index";
+import {FC} from "react";
 
-const MyPosts = () => {
-    const postsData = [
-        {id: v1(), message: 'Hi! How are you?', likesCount: 15},
-        {id: v1(), message: 'This is my first post', likesCount: 20}
-    ]
+type TMyPostsProps = {
+    postsData: Array<TPost>
+}
+
+const MyPosts:FC<TMyPostsProps> = ({postsData}) => {
 
     const posts = postsData.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />)
 

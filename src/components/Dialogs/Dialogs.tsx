@@ -1,23 +1,16 @@
-import styles from './Dialogs.module.css'
-import {v1} from "uuid";
+import {FC} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {TDialog, TMessage} from "../../index";
+import styles from './Dialogs.module.css'
 
+type TDialogPropsType = {
+    dialogsData: Array<TDialog>
+    messagesData: Array<TMessage>
+}
 
-const Dialogs = (props: any) => {
-    const dialogsData = [
-        {id: v1(), name: 'Sasha'},
-        {id: v1(), name: 'Dima'},
-        {id: v1(), name: 'Sergey'},
-        {id: v1(), name: 'Nikita'},
-        {id: v1(), name: 'Andrey'},
-    ]
+const Dialogs:FC<TDialogPropsType> = ({dialogsData, messagesData}) => {
 
-    const messagesData = [
-        {id: v1(), message: 'Hi'},
-        {id: v1(), message: 'How are you?'},
-        {id: v1(), message: 'I\'m fine!'},
-    ]
 
     const dialogsElements = dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
     const messages = messagesData.map(message => <Message message={message.message} key={message.id} />)
