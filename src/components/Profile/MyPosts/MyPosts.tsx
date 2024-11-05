@@ -1,7 +1,7 @@
 import Post from "./Post/Post";
-import styles from './MyPosts.module.css'
-import {TPost} from "../../../index";
 import {FC} from "react";
+import {TPost} from "../../../redux/state";
+import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
     postsData: Array<TPost>

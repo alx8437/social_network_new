@@ -10,7 +10,8 @@ const DialogItem = (props: DialogItemProps) => {
     const {id, name} = props;
 
     return (
-        <div>
+        <div className={styles.dialogsItem}>
+            <div className={styles.avatar}>Ava</div>
             <NavLink className={({isActive}) => isActive ? `${styles.dialog} ${styles.active}` : styles.dialog}
                      to={id}>{name}
             </NavLink>

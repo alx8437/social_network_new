@@ -1,19 +1,20 @@
 import {FC} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {TDialog, TMessage} from "../../index";
 import styles from './Dialogs.module.css'
+import {TDialog, TMessage} from "../../redux/state";
 
 type TDialogPropsType = {
-    dialogsData: Array<TDialog>
-    messagesData: Array<TMessage>
+    state: {
+        dialogs: Array<TDialog>
+        messages: Array<TMessage>
+    }
 }
 
-const Dialogs:FC<TDialogPropsType> = ({dialogsData, messagesData}) => {
+const Dialogs:FC<TDialogPropsType> = ({state}) => {
 
-
-    const dialogsElements = dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
-    const messages = messagesData.map(message => <Message message={message.message} key={message.id} />)
+    const dialogsElements = state.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
+    const messagesData = state.messages.map(message => <Message message={message.message} key={message.id} />)
 
     return (
         <div className={styles.dialogs}>
@@ -21,7 +22,7 @@ const Dialogs:FC<TDialogPropsType> = ({dialogsData, messagesData}) => {
                 {dialogsElements}
             </div>
             <div className={styles.messages}>
-                {messages}
+                {messagesData}
             </div>
         </div>
     );

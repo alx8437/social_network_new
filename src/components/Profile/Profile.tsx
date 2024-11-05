@@ -1,17 +1,19 @@
 import React, {FC} from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
-import {TPost} from "../../index";
+import {TPost} from "../../redux/state";
 
 type TProfilePropsType = {
-    postsData: Array<TPost>
+    state: {
+        posts: Array<TPost>
+    }
 }
 
-const Profile:FC<TProfilePropsType> = ({postsData}) => {
+const Profile:FC<TProfilePropsType> = ({state}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts postsData={postsData}/>
+            <MyPosts postsData={state.posts}/>
         </div>
     )
 }

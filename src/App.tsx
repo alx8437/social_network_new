@@ -4,24 +4,22 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import { Route, Routes } from "react-router-dom";
-import {TDialog, TMessage, TPost} from "./index";
 import './App.css';
+import {TState} from "./redux/state";
 
 type TAppPropsType = {
-    dialogsData: Array<TDialog>
-    messagesData: Array<TMessage>
-    postsData: Array<TPost>
+    state: TState
 }
 
-const App:FC<TAppPropsType> = ({messagesData, dialogsData, postsData}) => {
+const App:FC<TAppPropsType> = ({state}) => {
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
             <div className="app-wrapper-content">
                     <Routes>
-                        <Route path='/dialogs/*' element={<Dialogs messagesData={messagesData} dialogsData={dialogsData}/>} />
-                        <Route path='/profile' element={<Profile postsData={postsData}/>} />
+                        <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage}/>} />
+                        <Route path='/profile' element={<Profile state={state.profilePage}/>} />
                     </Routes>
             </div>
         </div>
