@@ -1,5 +1,5 @@
 import Post from "./Post/Post";
-import {FC} from "react";
+import React, { FC } from "react";
 import {TPost} from "../../../redux/state";
 import styles from './MyPosts.module.css'
 
@@ -8,14 +8,20 @@ type TMyPostsProps = {
 }
 
 const MyPosts:FC<TMyPostsProps> = ({postsData}) => {
+    const newPostElement = React.createRef<HTMLTextAreaElement>()
+
+    const addPost = () => {
+        const text = newPostElement.current?.value
+        alert(text)
+    }
 
     const posts = postsData.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />)
 
     return (
         <div className={styles.postsBlock}>My posts
             <div>
-                <div><textarea/></div>
-                <button>Add post</button>
+                <div><textarea ref={newPostElement}/></div>
+                <button onClick={addPost}>Add post</button>
             </div>
             <div className={styles.posts}>
                 {posts}
