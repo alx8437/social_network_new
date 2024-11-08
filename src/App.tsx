@@ -9,9 +9,10 @@ import {TState} from "./redux/state";
 
 type TAppPropsType = {
     state: TState
+    addPost: (postMessage: string) => void
 }
 
-const App:FC<TAppPropsType> = ({state}) => {
+const App:FC<TAppPropsType> = ({state, addPost}) => {
     return (
         <div className="app-wrapper">
             <Header />
@@ -19,7 +20,7 @@ const App:FC<TAppPropsType> = ({state}) => {
             <div className="app-wrapper-content">
                     <Routes>
                         <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage}/>} />
-                        <Route path='/profile' element={<Profile state={state.profilePage}/>} />
+                        <Route path='/profile' element={<Profile addPost={addPost} state={state.profilePage}/>} />
                     </Routes>
             </div>
         </div>

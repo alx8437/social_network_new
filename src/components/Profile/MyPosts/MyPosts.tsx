@@ -5,14 +5,17 @@ import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
     postsData: Array<TPost>
+    addPost: (postMessage: string) => void
 }
 
-const MyPosts:FC<TMyPostsProps> = ({postsData}) => {
+const MyPosts:FC<TMyPostsProps> = ({postsData, addPost}) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const addPost = () => {
-        const text = newPostElement.current?.value
-        alert(text)
+    const addNewPost = () => {
+        if (newPostElement.current) {
+            const text = newPostElement.current?.value
+            addPost(text)
+        }
     }
 
     const posts = postsData.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />)
@@ -21,7 +24,7 @@ const MyPosts:FC<TMyPostsProps> = ({postsData}) => {
         <div className={styles.postsBlock}>My posts
             <div>
                 <div><textarea ref={newPostElement}/></div>
-                <button onClick={addPost}>Add post</button>
+                <button onClick={addNewPost}>Add post</button>
             </div>
             <div className={styles.posts}>
                 {posts}

@@ -53,4 +53,14 @@ const state: TState = {
     }
 }
 
+export const addPost = (postMessage: string) => {
+    const newPost: TPost = {
+        id: v1(),
+        likesCount: 14,
+        message: postMessage
+    }
+
+    state.profilePage.posts.push(newPost);
+}
+
 export default state;
