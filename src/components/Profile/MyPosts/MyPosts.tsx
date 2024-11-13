@@ -15,6 +15,7 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, addPost}) => {
         if (newPostElement.current) {
             const text = newPostElement.current?.value
             addPost(text)
+            newPostElement.current.value = ''
         }
     }
 

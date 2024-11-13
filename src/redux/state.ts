@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 export type TDialog = {
     id: string;
@@ -61,6 +62,7 @@ export const addPost = (postMessage: string) => {
     }
 
     state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state)
 }
 
 export default state;
