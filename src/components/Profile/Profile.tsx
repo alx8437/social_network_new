@@ -6,15 +6,17 @@ import {TPost} from "../../redux/state";
 type TProfilePropsType = {
     state: {
         posts: Array<TPost>
+        newPostText: string
     },
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
-const Profile:FC<TProfilePropsType> = ({state, addPost}) => {
+const Profile:FC<TProfilePropsType> = ({state, addPost, updateNewPostText}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts addPost={addPost}  postsData={state.posts}/>
+            <MyPosts newPostText={state.newPostText} updateNewPostText={updateNewPostText} addPost={addPost}  postsData={state.posts}/>
         </div>
     )
 }

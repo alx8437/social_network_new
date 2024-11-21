@@ -19,6 +19,7 @@ export type TPost = {
 
 type TProfilePage = {
     posts: Array<TPost>
+    newPostText: string
 }
 
 type TMessagesPage = {
@@ -36,7 +37,8 @@ const state: TState = {
         posts: [
             {id: v1(), message: 'Hi! How are you?', likesCount: 15},
             {id: v1(), message: 'This is my first post', likesCount: 20}
-        ]
+        ],
+        newPostText: 'New post text'
     },
     dialogsPage: {
         messages: [
@@ -54,15 +56,22 @@ const state: TState = {
     }
 }
 
-export const addPost = (postMessage: string) => {
+
+export const addPost = () => {
     const newPost: TPost = {
         id: v1(),
         likesCount: 14,
-        message: postMessage
+        message: state.profilePage.newPostText
     }
 
     state.profilePage.posts.push(newPost);
+    updateNewPostText('')
     rerenderEntireTree(state)
+}
+
+export const updateNewPostText = (text: string) => {
+    state.profilePage.newPostText = text
+    rerenderEntireTree(state);
 }
 
 export default state;

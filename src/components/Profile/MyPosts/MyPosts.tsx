@@ -5,17 +5,24 @@ import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
     postsData: Array<TPost>
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (text: string) => void
 }
 
-const MyPosts:FC<TMyPostsProps> = ({postsData, addPost}) => {
+const MyPosts:FC<TMyPostsProps> = ({postsData, addPost, newPostText, updateNewPostText}) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addNewPost = () => {
         if (newPostElement.current) {
+            addPost()
+        }
+    }
+
+    const onPostChange = () => {
+        if (newPostElement.current) {
             const text = newPostElement.current?.value
-            addPost(text)
-            newPostElement.current.value = ''
+            updateNewPostText(text)
         }
     }
 
@@ -24,7 +31,7 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, addPost}) => {
     return (
         <div className={styles.postsBlock}>My posts
             <div>
-                <div><textarea ref={newPostElement}/></div>
+                <div><textarea onChange={onPostChange} ref={newPostElement} value={newPostText}/></div>
                 <button onClick={addNewPost}>Add post</button>
             </div>
             <div className={styles.posts}>
