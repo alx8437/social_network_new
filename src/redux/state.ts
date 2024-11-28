@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 export type TDialog = {
     id: string;
@@ -30,6 +29,10 @@ type TMessagesPage = {
 export type TState = {
     profilePage: TProfilePage
     dialogsPage: TMessagesPage
+}
+
+let rerenderEntireTree = (state: TState) => {
+    console.log('state changed')
 }
 
 const state: TState = {
@@ -72,6 +75,10 @@ export const addPost = () => {
 export const updateNewPostText = (text: string) => {
     state.profilePage.newPostText = text
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer: (state: TState) => void) => {
+    rerenderEntireTree = observer
 }
 
 export default state;
