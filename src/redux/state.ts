@@ -31,54 +31,61 @@ export type TState = {
     dialogsPage: TMessagesPage
 }
 
-let rerenderEntireTree = (state: TState) => {
-    console.log('state changed')
+type StoreType = {
+    _state: TState,
+    addPost: () => void
+    rerenderEntireTree: (state: TState) => void
+    updateNewPostText: (text: string) => void
+    subscribe: (observer: (state: TState) => void) => void
 }
 
-const state: TState = {
-    profilePage: {
-        posts: [
-            {id: v1(), message: 'Hi! How are you?', likesCount: 15},
-            {id: v1(), message: 'This is my first post', likesCount: 20}
-        ],
-        newPostText: 'New post text'
+const store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {id: v1(), message: 'Hi! How are you?', likesCount: 15},
+                {id: v1(), message: 'This is my first post', likesCount: 20}
+            ],
+            newPostText: 'New post text'
+        },
+        dialogsPage: {
+            messages: [
+                {id: v1(), message: 'Hi'},
+                {id: v1(), message: 'How are you?'},
+                {id: v1(), message: 'I\'m fine!'},
+            ],
+            dialogs: [
+                {id: v1(), name: 'Sasha'},
+                {id: v1(), name: 'Dima'},
+                {id: v1(), name: 'Sergey'},
+                {id: v1(), name: 'Nikita'},
+                {id: v1(), name: 'Andrey'},
+            ],
+        },
     },
-    dialogsPage: {
-        messages: [
-            {id: v1(), message: 'Hi'},
-            {id: v1(), message: 'How are you?'},
-            {id: v1(), message: 'I\'m fine!'},
-        ],
-        dialogs: [
-            {id: v1(), name: 'Sasha'},
-            {id: v1(), name: 'Dima'},
-            {id: v1(), name: 'Sergey'},
-            {id: v1(), name: 'Nikita'},
-            {id: v1(), name: 'Andrey'},
-        ],
-    }
-}
+    addPost() {
+        const newPost: TPost = {
+            id: v1(),
+            likesCount: 14,
+            message: this._state.profilePage.newPostText
+        }
 
-
-export const addPost = () => {
-    const newPost: TPost = {
-        id: v1(),
-        likesCount: 14,
-        message: state.profilePage.newPostText
+        this._state.profilePage.posts.push(newPost);
+        this.updateNewPostText('')
+        this.rerenderEntireTree(this._state)
+    },
+    rerenderEntireTree(state: TState) {
+        console.log('state changed')
+    },
+    updateNewPostText(text: string) {
+        this._state.profilePage.newPostText = text
+        this.rerenderEntireTree(this._state);
+    },
+    subscribe(observer: (state: TState) => void) {
+        this.rerenderEntireTree = observer
     }
 
-    state.profilePage.posts.push(newPost);
-    updateNewPostText('')
-    rerenderEntireTree(state)
 }
 
-export const updateNewPostText = (text: string) => {
-    state.profilePage.newPostText = text
-    rerenderEntireTree(state);
-}
 
-export const subscribe = (observer: (state: TState) => void) => {
-    rerenderEntireTree = observer
-}
-
-export default state;
+export default store;

@@ -1,5 +1,5 @@
 import './index.css';
-import state, {addPost, updateNewPostText, subscribe, TState} from "./redux/state";
+import store , { TState } from "./redux/state";
 import ReactDOM from "react-dom/client";
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
@@ -14,12 +14,12 @@ const rerenderEntireTree = (state: TState) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
+                <App state={store._state} addPost={store.addPost} updateNewPostText={store.updateNewPostText}/>
             </BrowserRouter>
         </React.StrictMode>
     );
 }
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
 
-rerenderEntireTree(state);
+rerenderEntireTree(store._state);
