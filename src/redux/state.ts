@@ -34,9 +34,10 @@ export type TState = {
 type StoreType = {
     _state: TState,
     addPost: () => void
-    rerenderEntireTree: (state: TState) => void
+    _callSubscriber: (state: TState) => void
     updateNewPostText: (text: string) => void
     subscribe: (observer: (state: TState) => void) => void
+    getState: () => TState
 }
 
 const store: StoreType = {
@@ -72,17 +73,20 @@ const store: StoreType = {
 
         this._state.profilePage.posts.push(newPost);
         this.updateNewPostText('')
-        this.rerenderEntireTree(this._state)
+        this._callSubscriber(this._state)
     },
-    rerenderEntireTree(state: TState) {
+    _callSubscriber(state: TState) {
         console.log('state changed')
     },
     updateNewPostText(text: string) {
         this._state.profilePage.newPostText = text
-        this.rerenderEntireTree(this._state);
+        this._callSubscriber(this._state);
     },
     subscribe(observer: (state: TState) => void) {
-        this.rerenderEntireTree = observer
+        this._callSubscriber = observer
+    },
+    getState() {
+        return this._state
     }
 
 }

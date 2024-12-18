@@ -14,7 +14,7 @@ const rerenderEntireTree = (state: TState) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={store._state} addPost={store.addPost} updateNewPostText={store.updateNewPostText}/>
+                <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}/>
             </BrowserRouter>
         </React.StrictMode>
     );
@@ -22,4 +22,4 @@ const rerenderEntireTree = (state: TState) => {
 
 store.subscribe(rerenderEntireTree)
 
-rerenderEntireTree(store._state);
+rerenderEntireTree(store.getState());
