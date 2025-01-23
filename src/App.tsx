@@ -5,23 +5,23 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import { Route, Routes } from "react-router-dom";
 import './App.css';
-import {TState} from "./redux/state";
+import {ActionTypes, TState} from "./redux/state";
 
 type TAppPropsType = {
     state: TState
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-const App:FC<TAppPropsType> = ({state, addPost, updateNewPostText}) => {
+const App:FC<TAppPropsType> = ({state, dispatch}) => {
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
             <div className="app-wrapper-content">
                     <Routes>
+                        <Route path='/' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
                         <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage}/>} />
-                        <Route path='/profile' element={<Profile updateNewPostText={updateNewPostText} addPost={addPost} state={state.profilePage}/>} />
+                        <Route path='/profile' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
                     </Routes>
             </div>
         </div>

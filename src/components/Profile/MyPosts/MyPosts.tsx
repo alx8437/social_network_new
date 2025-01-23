@@ -1,28 +1,29 @@
 import Post from "./Post/Post";
 import React, { FC } from "react";
-import {TPost} from "../../../redux/state";
+import {ActionTypes, AddPostActionType, TPost, UpdateNewPostTextActionType} from "../../../redux/state";
 import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
     postsData: Array<TPost>
-    addPost: () => void
     newPostText: string
-    updateNewPostText: (text: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-const MyPosts:FC<TMyPostsProps> = ({postsData, addPost, newPostText, updateNewPostText}) => {
+const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addNewPost = () => {
         if (newPostElement.current) {
-            addPost()
+            const action: AddPostActionType = {type: "ADD_POST", postText: newPostElement.current.value};
+            dispatch(action)
         }
     }
 
     const onPostChange = () => {
         if (newPostElement.current) {
             const text = newPostElement.current?.value
-            updateNewPostText(text)
+            const action: UpdateNewPostTextActionType = {type: "UPDATE_NEW_POST_TEXT", newText: text };
+            dispatch(action)
         }
     }
 

@@ -1,22 +1,21 @@
 import React, {FC} from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
-import {TPost} from "../../redux/state";
+import {ActionTypes, TPost} from "../../redux/state";
 
 type TProfilePropsType = {
     state: {
         posts: Array<TPost>
         newPostText: string
     },
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-const Profile:FC<TProfilePropsType> = ({state, addPost, updateNewPostText}) => {
+const Profile:FC<TProfilePropsType> = ({state, dispatch}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts newPostText={state.newPostText} updateNewPostText={updateNewPostText} addPost={addPost}  postsData={state.posts}/>
+            <MyPosts newPostText={state.newPostText} dispatch={dispatch} postsData={state.posts}/>
         </div>
     )
 }

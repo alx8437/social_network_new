@@ -10,6 +10,11 @@ export type TMessage = {
     message: string
 }
 
+type TMessagesPage = {
+    messages: Array<TMessage>
+    dialogs: Array<TDialog>
+}
+
 export type TPost = {
     id: string
     message: string
@@ -21,10 +26,6 @@ type TProfilePage = {
     newPostText: string
 }
 
-type TMessagesPage = {
-    messages: Array<TMessage>
-    dialogs: Array<TDialog>
-}
 
 export type TState = {
     profilePage: TProfilePage
@@ -33,12 +34,23 @@ export type TState = {
 
 type StoreType = {
     _state: TState,
-    addPost: () => void
     _callSubscriber: (state: TState) => void
-    updateNewPostText: (text: string) => void
     subscribe: (observer: (state: TState) => void) => void
-    getState: () => TState
+    getState: () => TState,
+    dispatch: (action: ActionTypes) => void
 }
+
+export type AddPostActionType = {
+    type: "ADD_POST",
+    postText: string
+}
+
+export type UpdateNewPostTextActionType = {
+    type: "UPDATE_NEW_POST_TEXT",
+    newText: string
+}
+
+export type ActionTypes = AddPostActionType | UpdateNewPostTextActionType
 
 const store: StoreType = {
     _state: {
@@ -64,32 +76,31 @@ const store: StoreType = {
             ],
         },
     },
-    addPost() {
-        const newPost: TPost = {
-            id: v1(),
-            likesCount: 14,
-            message: this._state.profilePage.newPostText
-        }
-
-        this._state.profilePage.posts.push(newPost);
-        this.updateNewPostText('')
-        this._callSubscriber(this._state)
-    },
     _callSubscriber(state: TState) {
         console.log('state changed')
     },
-    updateNewPostText(text: string) {
-        this._state.profilePage.newPostText = text
-        this._callSubscriber(this._state);
-    },
+
     subscribe(observer: (state: TState) => void) {
         this._callSubscriber = observer
     },
     getState() {
         return this._state
+    },
+    dispatch(action: ActionTypes) {
+        if (action.type === "ADD_POST") {
+                const newPost: TPost = {
+                    id: v1(),
+                    likesCount: 14,
+                    message: action.postText
+                }
+                this._state.profilePage.posts.push(newPost);
+                this._state.profilePage.newPostText = ''
+                this._callSubscriber(this._state)
+        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
+                this._state.profilePage.newPostText = action.newText;
+                this._callSubscriber(this._state);
+        }
     }
-
 }
-
 
 export default store;
