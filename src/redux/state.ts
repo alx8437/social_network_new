@@ -40,6 +40,21 @@ type StoreType = {
     dispatch: (action: ActionTypes) => void
 }
 
+const ADD_POST = "ADD_POST";
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+
+export const addPostAC = (postText: string): AddPostActionType => ({
+        type: ADD_POST,
+        postText,
+})
+
+
+export const UpdateNewPostTextAC = (newText: string): UpdateNewPostTextActionType => ({
+        type: UPDATE_NEW_POST_TEXT,
+        newText,
+})
+
+
 export type AddPostActionType = {
     type: "ADD_POST",
     postText: string
@@ -87,7 +102,7 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action: ActionTypes) {
-        if (action.type === "ADD_POST") {
+        if (action.type === ADD_POST) {
                 const newPost: TPost = {
                     id: v1(),
                     likesCount: 14,
@@ -96,7 +111,7 @@ const store: StoreType = {
                 this._state.profilePage.posts.push(newPost);
                 this._state.profilePage.newPostText = ''
                 this._callSubscriber(this._state)
-        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
                 this._state.profilePage.newPostText = action.newText;
                 this._callSubscriber(this._state);
         }

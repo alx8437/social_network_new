@@ -1,6 +1,6 @@
 import Post from "./Post/Post";
 import React, { FC } from "react";
-import {ActionTypes, AddPostActionType, TPost, UpdateNewPostTextActionType} from "../../../redux/state";
+import {ActionTypes, addPostAC, UpdateNewPostTextAC, TPost} from "../../../redux/state";
 import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
@@ -14,16 +14,15 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
 
     const addNewPost = () => {
         if (newPostElement.current) {
-            const action: AddPostActionType = {type: "ADD_POST", postText: newPostElement.current.value};
-            dispatch(action)
+            const newPostText = newPostElement.current.value
+            dispatch(addPostAC(newPostText))
         }
     }
 
     const onPostChange = () => {
         if (newPostElement.current) {
             const text = newPostElement.current?.value
-            const action: UpdateNewPostTextActionType = {type: "UPDATE_NEW_POST_TEXT", newText: text };
-            dispatch(action)
+            dispatch(UpdateNewPostTextAC(text))
         }
     }
 
