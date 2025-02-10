@@ -20,7 +20,7 @@ const App:FC<TAppPropsType> = ({state, dispatch}) => {
             <div className="app-wrapper-content">
                     <Routes>
                         <Route path='/' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
-                        <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage}/>} />
+                        <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage} dispatch={dispatch} />} />
                         <Route path='/profile' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
                     </Routes>
             </div>

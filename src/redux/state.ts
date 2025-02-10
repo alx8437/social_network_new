@@ -13,6 +13,7 @@ export type TMessage = {
 type TMessagesPage = {
     messages: Array<TMessage>
     dialogs: Array<TDialog>
+    newMessageText: string
 }
 
 export type TPost = {
@@ -32,7 +33,7 @@ export type TState = {
     dialogsPage: TMessagesPage
 }
 
-type StoreType = {
+export type StoreType = {
     _state: TState,
     _callSubscriber: (state: TState) => void
     subscribe: (observer: (state: TState) => void) => void
@@ -42,23 +43,40 @@ type StoreType = {
 
 const ADD_POST = "ADD_POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
+const SEND_MESSAGE = 'SEND_MESSAGE';
 
-export const addPostAC = (postText: string) => {
+export const sendMessageAC = () => {
     return {
-        type: ADD_POST,
-        postText,
+        type: SEND_MESSAGE,
     } as const
 }
 
+export const updateNewMessageTextAC = (messageText: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText: messageText,
+    } as const
+}
 
-export const UpdateNewPostTextAC = (newText: string) => {
+export const addPostAC = () => {
+    return {
+        type: ADD_POST,
+    } as const
+}
+
+export const updateNewPostTextAC = (newText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText,
     } as const
 }
 
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof UpdateNewPostTextAC>
+export type ActionTypes =
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof updateNewMessageTextAC> |
+    ReturnType<typeof sendMessageAC>
 
 const store: StoreType = {
     _state: {
@@ -82,6 +100,7 @@ const store: StoreType = {
                 {id: v1(), name: 'Nikita'},
                 {id: v1(), name: 'Andrey'},
             ],
+            newMessageText: 'new message!'
         },
     },
     _callSubscriber(state: TState) {
@@ -99,13 +118,24 @@ const store: StoreType = {
                 const newPost: TPost = {
                     id: v1(),
                     likesCount: 14,
-                    message: action.postText
+                    message: this._state.profilePage.newPostText
                 }
                 this._state.profilePage.posts.push(newPost);
                 this._state.profilePage.newPostText = ''
                 this._callSubscriber(this._state)
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
                 this._state.profilePage.newPostText = action.newText;
+                this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+                this._state.dialogsPage.newMessageText = action.newMessageText
+                this._callSubscriber(this._state);
+        } else if (action.type === SEND_MESSAGE) {
+                const newMessage = {
+                    id: v1(),
+                    message: this._state.dialogsPage.newMessageText,
+                };
+                this._state.dialogsPage.messages.push(newMessage);
+                this._state.dialogsPage.newMessageText = '';
                 this._callSubscriber(this._state);
         }
     }

@@ -1,6 +1,6 @@
 import Post from "./Post/Post";
 import React, { FC } from "react";
-import {ActionTypes, addPostAC, UpdateNewPostTextAC, TPost} from "../../../redux/state";
+import {ActionTypes, addPostAC, updateNewPostTextAC, TPost} from "../../../redux/state";
 import styles from './MyPosts.module.css'
 
 type TMyPostsProps = {
@@ -15,14 +15,14 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
     const addNewPost = () => {
         if (newPostElement.current) {
             const newPostText = newPostElement.current.value
-            dispatch(addPostAC(newPostText))
+            dispatch(addPostAC())
         }
     }
 
     const onPostChange = () => {
         if (newPostElement.current) {
             const text = newPostElement.current?.value
-            dispatch(UpdateNewPostTextAC(text))
+            dispatch(updateNewPostTextAC(text))
         }
     }
 
@@ -31,7 +31,13 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
     return (
         <div className={styles.postsBlock}>My posts
             <div>
-                <div><textarea onChange={onPostChange} ref={newPostElement} value={newPostText}/></div>
+                <div>
+                    <textarea
+                        onChange={onPostChange}
+                        ref={newPostElement}
+                        value={newPostText}
+                    />
+                </div>
                 <button onClick={addNewPost}>Add post</button>
             </div>
             <div className={styles.posts}>
