@@ -1,7 +1,8 @@
 import Post from "./Post/Post";
 import React, { FC } from "react";
-import {ActionTypes, addPostAC, updateNewPostTextAC, TPost} from "../../../redux/state";
+import {ActionTypes, TPost} from "../../../redux/state";
 import styles from './MyPosts.module.css'
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
 
 type TMyPostsProps = {
     postsData: Array<TPost>
