@@ -1,4 +1,4 @@
-import {ActionTypes, TDialogsPage} from "./state";
+import {ActionTypes, TDialogsPage} from "./store";
 import {v1} from "uuid";
 
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
@@ -17,7 +17,23 @@ export const updateNewMessageTextAC = (messageText: string) => {
     } as const
 }
 
-const dialogsReducer = (state: TDialogsPage, action: ActionTypes) => {
+const initialState = {
+    messages: [
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'How are you?'},
+        {id: v1(), message: 'I\'m fine!'},
+    ],
+    dialogs: [
+        {id: v1(), name: 'Sasha'},
+        {id: v1(), name: 'Dima'},
+        {id: v1(), name: 'Sergey'},
+        {id: v1(), name: 'Nikita'},
+        {id: v1(), name: 'Andrey'},
+    ],
+    newMessageText: 'new message!'
+}
+
+const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
             state.newMessageText = action.newMessageText;

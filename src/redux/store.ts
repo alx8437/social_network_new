@@ -29,7 +29,6 @@ export type TProfilePage = {
     newPostText: string
 }
 
-
 export type TState = {
     profilePage: TProfilePage
     dialogsPage: TDialogsPage

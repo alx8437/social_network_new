@@ -1,4 +1,4 @@
-import {ActionTypes, TPost, TProfilePage} from "./state";
+import {ActionTypes, TPost, TProfilePage} from "./store";
 import {v1} from "uuid";
 
 const ADD_POST = "ADD_POST";
@@ -17,7 +17,15 @@ export const updateNewPostTextAC = (newText: string) => {
     } as const
 }
 
-const profileReducer = (state: TProfilePage, action: ActionTypes) => {
+const initialState = {
+    posts: [
+        {id: v1(), message: 'Hi! How are you?', likesCount: 15},
+        {id: v1(), message: 'This is my first post', likesCount: 20}
+    ],
+    newPostText: 'New post text'
+}
+
+const profileReducer = (state: TProfilePage = initialState, action: ActionTypes) => {
     switch (action.type) {
         case ADD_POST:
             const newPost: TPost = {

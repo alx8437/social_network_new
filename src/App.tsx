@@ -5,23 +5,24 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import { Route, Routes } from "react-router-dom";
 import './App.css';
-import {ActionTypes, TState} from "./redux/state";
+import {ActionTypes, TDialogsPage, TProfilePage} from "./redux/store";
+import {CombinedState, Store} from "redux";
 
 type TAppPropsType = {
-    state: TState
+    store: Store<CombinedState<{ profilePage: TProfilePage; dialogsPage: TDialogsPage; }>, ActionTypes>
     dispatch: (action: ActionTypes) => void
 }
 
-const App:FC<TAppPropsType> = ({state, dispatch}) => {
+const App:FC<TAppPropsType> = ({store, dispatch}) => {
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
             <div className="app-wrapper-content">
                     <Routes>
-                        <Route path='/' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
-                        <Route path='/dialogs/*' element={<Dialogs state={state.dialogsPage} dispatch={dispatch} />} />
-                        <Route path='/profile' element={<Profile dispatch={dispatch} state={state.profilePage}/>} />
+                        <Route path='/' element={<Profile dispatch={dispatch} state={store.getState().profilePage}/>} />
+                        <Route path='/dialogs/*' element={<Dialogs state={store.getState().dialogsPage} dispatch={dispatch} />} />
+                        <Route path='/profile' element={<Profile dispatch={dispatch} state={store.getState().profilePage}/>} />
                     </Routes>
             </div>
         </div>
