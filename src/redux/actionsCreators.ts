@@ -10,10 +10,10 @@ export const addPostAC = () => {
     } as const
 }
 
-export const updateNewPostTextAC = (newText: string) => {
+export const updateNewPostTextAC = (text: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
-        newText,
+        text,
     } as const
 }
 

@@ -24,7 +24,7 @@ const profileReducer = (state: TProfilePage = initialState, action: ActionTypes)
             return state
 
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
+            state.newPostText = action.text;
 
             return state
 

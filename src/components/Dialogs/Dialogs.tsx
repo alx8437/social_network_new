@@ -2,31 +2,28 @@ import {ChangeEvent, FC} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import styles from './Dialogs.module.css'
-import { TDialog, TMessage } from "../../redux/store";
-import {ActionTypes, sendMessageAC, updateNewMessageTextAC} from "../../redux/actionsCreators";
+import {TDialogsPage} from "../../redux/store";
 
 type TDialogPropsType = {
-    state: {
-        dialogs: Array<TDialog>
-        messages: Array<TMessage>
-        newMessageText: string
-    },
-    dispatch: (action: ActionTypes) => void
+    dialogsPage: TDialogsPage
+    onChangeMessage: (text: string) => void
+    sendMessage: () => void
 }
 
-const Dialogs:FC<TDialogPropsType> = ({state, dispatch}) => {
+const Dialogs:FC<TDialogPropsType> = (
+    {
+        dialogsPage,
+        onChangeMessage,
+        sendMessage,
+    }) => {
 
-    const dialogsElements = state.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
-    const messagesData = state.messages.map(message => <Message message={message.message} key={message.id} />)
+    const dialogsElements = dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
+    const messagesData = dialogsPage.messages.map(message => <Message message={message.message} key={message.id} />)
 
 
     const onChangeMessageValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newMessageText = e.currentTarget.value;
-        dispatch(updateNewMessageTextAC(newMessageText));
-    }
-
-    const onSendMessageClick = () => {
-        dispatch(sendMessageAC())
+        onChangeMessage(newMessageText)
     }
 
     return (
@@ -40,12 +37,12 @@ const Dialogs:FC<TDialogPropsType> = ({state, dispatch}) => {
                     <div>
                         <textarea
                             placeholder='Enter your message'
-                            value={state.newMessageText}
+                            value={dialogsPage.newMessageText}
                             onChange={onChangeMessageValue}
                         />
                     </div>
                     <div>
-                        <button onClick={onSendMessageClick}>Send message</button>
+                        <button onClick={sendMessage}>Send message</button>
                     </div>
                 </div>
             </div>

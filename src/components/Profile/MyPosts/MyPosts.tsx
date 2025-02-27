@@ -2,28 +2,22 @@ import Post from "./Post/Post";
 import React, { FC } from "react";
 import {TPost} from "../../../redux/store";
 import styles from './MyPosts.module.css'
-import {ActionTypes, addPostAC, updateNewPostTextAC} from "../../../redux/actionsCreators";
 
 type TMyPostsProps = {
     postsData: Array<TPost>
     newPostText: string
-    dispatch: (action: ActionTypes) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
-const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
+const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, addPost, updateNewPostText}) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const addNewPost = () => {
-        if (newPostElement.current) {
-            const newPostText = newPostElement.current.value
-            dispatch(addPostAC())
-        }
-    }
 
     const onPostChange = () => {
         if (newPostElement.current) {
             const text = newPostElement.current?.value
-            dispatch(updateNewPostTextAC(text))
+            updateNewPostText(text)
         }
     }
 
@@ -39,7 +33,7 @@ const MyPosts:FC<TMyPostsProps> = ({postsData, newPostText, dispatch}) => {
                         value={newPostText}
                     />
                 </div>
-                <button onClick={addNewPost}>Add post</button>
+                <button onClick={addPost}>Add post</button>
             </div>
             <div className={styles.posts}>
                 {posts}

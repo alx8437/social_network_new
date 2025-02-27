@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import MyPosts from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
 import { TPost} from "../../redux/store";
 import {ActionTypes} from "../../redux/actionsCreators";
+import MyPostsContainer from "./MyPosts/MyPostContainer";
 
 type TProfilePropsType = {
     state: {
@@ -16,7 +16,7 @@ const Profile:FC<TProfilePropsType> = ({state, dispatch}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts newPostText={state.newPostText} dispatch={dispatch} postsData={state.posts}/>
+            <MyPostsContainer newPostText={state.newPostText} dispatch={dispatch} postsData={state.posts}/>
         </div>
     )
 }
