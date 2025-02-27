@@ -2,8 +2,8 @@ import {ChangeEvent, FC} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import styles from './Dialogs.module.css'
-import {ActionTypes, TDialog, TMessage } from "../../redux/store";
-import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogsReducer";
+import { TDialog, TMessage } from "../../redux/store";
+import {ActionTypes, sendMessageAC, updateNewMessageTextAC} from "../../redux/actionsCreators";
 
 type TDialogPropsType = {
     state: {

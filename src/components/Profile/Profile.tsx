@@ -1,7 +1,8 @@
 import React, {FC} from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
-import {ActionTypes, TPost} from "../../redux/store";
+import { TPost} from "../../redux/store";
+import {ActionTypes} from "../../redux/actionsCreators";
 
 type TProfilePropsType = {
     state: {

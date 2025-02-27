@@ -1,6 +1,7 @@
 import {v1} from "uuid";
-import profileReducer, {addPostAC, updateNewPostTextAC} from "./profileReducer";
-import dialogsReducer, {sendMessageAC, updateNewMessageTextAC} from "./dialogsReducer";
+import {ActionTypes} from "./actionsCreators";
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
 
 export type TDialog = {
     id: string;
@@ -37,18 +38,11 @@ export type TState = {
 export type StoreType = {
     _state: TState,
     _callSubscriber: (state: TState) => void
-    subscribe: (observer: (state: TState) => void) => void
+    subscribe: (observer: () => void) => void
     getState: () => TState,
     dispatch: (action: ActionTypes) => void
 }
 
-
-
-export type ActionTypes =
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateNewPostTextAC> |
-    ReturnType<typeof updateNewMessageTextAC> |
-    ReturnType<typeof sendMessageAC>
 
 const store: StoreType = {
     _state: {
@@ -79,7 +73,7 @@ const store: StoreType = {
         console.log('state changed')
     },
 
-    subscribe(observer: (state: TState) => void) {
+    subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
     getState() {

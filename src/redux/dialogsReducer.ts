@@ -1,21 +1,8 @@
-import {ActionTypes, TDialogsPage} from "./store";
+import {TDialogsPage} from "./store";
 import {v1} from "uuid";
+import {UPDATE_NEW_MESSAGE_TEXT, SEND_MESSAGE, ActionTypes} from "./actionsCreators";
 
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
-const SEND_MESSAGE = 'SEND_MESSAGE';
 
-export const sendMessageAC = () => {
-    return {
-        type: SEND_MESSAGE,
-    } as const
-}
-
-export const updateNewMessageTextAC = (messageText: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newMessageText: messageText,
-    } as const
-}
 
 const initialState = {
     messages: [

@@ -1,21 +1,6 @@
-import {ActionTypes, TPost, TProfilePage} from "./store";
+import {TPost, TProfilePage} from "./store";
 import {v1} from "uuid";
-
-const ADD_POST = "ADD_POST";
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-
-export const addPostAC = () => {
-    return {
-        type: ADD_POST,
-    } as const
-}
-
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText,
-    } as const
-}
+import {ActionTypes, ADD_POST, UPDATE_NEW_POST_TEXT} from "./actionsCreators";
 
 const initialState = {
     posts: [

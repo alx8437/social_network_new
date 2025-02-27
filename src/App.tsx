@@ -5,8 +5,9 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import { Route, Routes } from "react-router-dom";
 import './App.css';
-import {ActionTypes, TDialogsPage, TProfilePage} from "./redux/store";
+import {TDialogsPage, TProfilePage} from "./redux/store";
 import {CombinedState, Store} from "redux";
+import {ActionTypes} from "./redux/actionsCreators";
 
 type TAppPropsType = {
     store: Store<CombinedState<{ profilePage: TProfilePage; dialogsPage: TDialogsPage; }>, ActionTypes>
