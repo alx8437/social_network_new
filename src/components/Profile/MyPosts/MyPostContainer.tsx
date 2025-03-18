@@ -1,26 +1,30 @@
-import React, {FC} from "react";
-import {TPost} from "../../../redux/store";
-import {ActionTypes, addPostAC, updateNewPostTextAC} from "../../../redux/actionsCreators";
+import React from "react";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/actionsCreators";
 import MyPosts from "./MyPosts";
+import StoreContext from "../../../StoreContext";
 
-type TMyPostsContainerProps = {
-    postsData: Array<TPost>
-    newPostText: string
-    dispatch: (action: ActionTypes) => void
-}
 
-const MyPostsContainer: FC<TMyPostsContainerProps> = ({postsData, newPostText, dispatch}) => {
-    const addPost = () => {
-        dispatch(addPostAC())
-    }
+const MyPostsContainer = () => {
 
-    const updateNewPostText = (text: string) => {
-        const action = updateNewPostTextAC(text)
-        dispatch(action);
-    }
+    return (
+        <StoreContext.Consumer>
+            {store => {
+                const addPost = () => {
+                    store.dispatch(addPostAC())
+                }
 
-    return (<MyPosts newPostText={newPostText} postsData={postsData} updateNewPostText={updateNewPostText}
-                     addPost={addPost}/>)
+                const updateNewPostText = (text: string) => {
+                    const action = updateNewPostTextAC(text)
+                    store.dispatch(action);
+                }
+
+
+                return <MyPosts newPostText={store.getState().profilePage.newPostText} postsData={store.getState().profilePage.posts} updateNewPostText={updateNewPostText}
+                                addPost={addPost}/>
+            }}
+
+        </StoreContext.Consumer>
+    )
 }
 
 export default MyPostsContainer;
