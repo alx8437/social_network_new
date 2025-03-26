@@ -4,7 +4,7 @@ import {UPDATE_NEW_MESSAGE_TEXT, SEND_MESSAGE, ActionTypes} from "./actionsCreat
 
 
 
-const initialState = {
+const initialState: TDialogsPage = {
     messages: [
         {id: v1(), message: 'Hi'},
         {id: v1(), message: 'How are you?'},
