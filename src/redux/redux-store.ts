@@ -1,6 +1,7 @@
 import {combineReducers, createStore} from "redux";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
+import {composeWithDevTools} from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -9,4 +10,4 @@ const rootReducer = combineReducers({
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, composeWithDevTools());

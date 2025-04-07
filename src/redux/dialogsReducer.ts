@@ -22,19 +22,26 @@ const initialState: TDialogsPage = {
 
 const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newMessageText;
+        case UPDATE_NEW_MESSAGE_TEXT: {
+            const stateCopy = {...state}
+            stateCopy.newMessageText = action.newMessageText;
 
-            return state;
-        case SEND_MESSAGE:
+            return stateCopy;
+        }
+
+        case SEND_MESSAGE: {
             const newMessage = {
                 id: v1(),
                 message: state.newMessageText,
             };
-            state.messages.push(newMessage);
-            state.newMessageText = '';
+            const stateCopy = {...state};
+            stateCopy.messages = [...stateCopy.messages]
+            stateCopy.messages.push(newMessage)
+            stateCopy.newMessageText = '';
 
-            return state;
+            return stateCopy;
+        }
+
 
         default:
             return state;

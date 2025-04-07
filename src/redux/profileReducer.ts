@@ -12,21 +12,27 @@ const initialState = {
 
 const profileReducer = (state: TProfilePage = initialState, action: ActionTypes) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             const newPost: TPost = {
                 id: v1(),
                 likesCount: 14,
                 message: state.newPostText
             }
-            state.posts.push(newPost);
-            state.newPostText = ''
+            const stateCopy = {...state};
+            stateCopy.posts = [...stateCopy.posts]
+            stateCopy.posts.push(newPost);
+            stateCopy.newPostText = ''
 
-            return state
+            return stateCopy
+        }
 
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.text;
 
-            return state
+        case UPDATE_NEW_POST_TEXT: {
+            const stateCopy = {...state}
+            stateCopy.newPostText = action.text
+
+            return stateCopy
+        }
 
         default:
             return state
