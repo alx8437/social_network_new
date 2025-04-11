@@ -18,20 +18,19 @@ const profileReducer = (state: TProfilePage = initialState, action: ActionTypes)
                 likesCount: 14,
                 message: state.newPostText
             }
-            const stateCopy = {...state};
-            stateCopy.posts = [...stateCopy.posts]
-            stateCopy.posts.push(newPost);
-            stateCopy.newPostText = ''
 
-            return stateCopy
+            return {
+                ...state,
+                newPostText: '',
+                posts: [...state.posts, newPost]
+            }
         }
 
-
         case UPDATE_NEW_POST_TEXT: {
-            const stateCopy = {...state}
-            stateCopy.newPostText = action.text
-
-            return stateCopy
+            return {
+                ...state,
+                newPostText: action.text
+            }
         }
 
         default:

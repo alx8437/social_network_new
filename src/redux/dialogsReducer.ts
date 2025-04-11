@@ -1,7 +1,6 @@
 import {TDialogsPage} from "./store";
 import {v1} from "uuid";
-import {UPDATE_NEW_MESSAGE_TEXT, SEND_MESSAGE, ActionTypes} from "./actionsCreators";
-
+import {ActionTypes, SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} from "./actionsCreators";
 
 
 const initialState: TDialogsPage = {
@@ -23,10 +22,10 @@ const initialState: TDialogsPage = {
 const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT: {
-            const stateCopy = {...state}
-            stateCopy.newMessageText = action.newMessageText;
-
-            return stateCopy;
+            return {
+                ...state,
+                newMessageText: action.newMessageText
+            };
         }
 
         case SEND_MESSAGE: {
@@ -34,12 +33,11 @@ const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes)
                 id: v1(),
                 message: state.newMessageText,
             };
-            const stateCopy = {...state};
-            stateCopy.messages = [...stateCopy.messages]
-            stateCopy.messages.push(newMessage)
-            stateCopy.newMessageText = '';
-
-            return stateCopy;
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newMessageText: ''
+            };
         }
 
 
