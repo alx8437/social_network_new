@@ -10,6 +10,5 @@ export const ProfileInfo = () => {
             </div>
             <div className={styles.description}>ava + description</div>
         </>
-    )
-        ;
+    );
 };

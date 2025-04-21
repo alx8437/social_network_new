@@ -13,6 +13,7 @@ export type UserType = {
     fullName: string,
     status: string,
     location: UserLocationType
+    photoUrl: string
 }
 
 type UserStateType = {
@@ -20,10 +21,7 @@ type UserStateType = {
 }
 
 const initialState: UserStateType = {
-    users: [
-        {id: 1, followed: true, fullName: 'Alex', status: 'I am a student', location: {city: 'Krasnodar', country: 'Russia'}},
-        {id: 2, followed: false, fullName: 'Dimych', status: 'I am teacher', location: {city: 'Batumi', country: 'Georgia'}},
-    ]
+    users: []
 }
 
 type UsersActionsType =
@@ -50,7 +48,7 @@ export const usersReducer = (state: UserStateType = initialState, action: UsersA
         case SET_USERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...action.users]
             }
         }
 
