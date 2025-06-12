@@ -1,9 +1,8 @@
-import {addPostAC, updateNewPostTextAC} from "../../../redux/actionsCreators";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {TPost} from "../../../redux/store";
-import {AppStateType} from "../../../redux/redux-store";
+import {AppStateType} from "../../../redux/store";
 import {Dispatch} from "redux";
+import {addPostAC, TPost, updateNewPostTextAC} from "../../../redux/profileReducer";
 
 
 type MapStateToPropsType = {

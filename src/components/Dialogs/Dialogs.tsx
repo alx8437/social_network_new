@@ -2,7 +2,7 @@ import {ChangeEvent, FC} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import styles from './Dialogs.module.css'
-import {TDialogsPage} from "../../redux/store";
+import {TDialogsPage} from "../../redux/dialogsReducer";
 
 type TDialogPropsType = {
     dialogsPage: TDialogsPage

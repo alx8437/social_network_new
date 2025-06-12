@@ -1,7 +1,7 @@
 import Post from "./Post/Post";
 import React, { FC } from "react";
-import {TPost} from "../../../redux/store";
 import styles from './MyPosts.module.css'
+import {TPost} from "../../../redux/profileReducer";
 
 type TMyPostsProps = {
     postsData: Array<TPost>

@@ -1,9 +1,8 @@
-import {sendMessageAC, updateNewMessageTextAC} from "../../redux/actionsCreators";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/store";
 import {Dispatch} from "redux";
-import {TDialogsPage} from "../../redux/store";
+import {sendMessageAC, TDialogsPage, updateNewMessageTextAC} from "../../redux/dialogsReducer";
 
 type MapStateToPropsType = {
     dialogsPage: TDialogsPage
@@ -13,7 +12,6 @@ type MapDispatchToPropsType = {
     onChangeMessage: (text: string) => void
     sendMessage: () => void
 }
-
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {

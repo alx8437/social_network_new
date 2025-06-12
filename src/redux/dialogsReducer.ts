@@ -1,7 +1,23 @@
-import {TDialogsPage} from "./store";
 import {v1} from "uuid";
-import {ActionTypes, SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} from "./actionsCreators";
 
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
+const SEND_MESSAGE = 'SEND_MESSAGE';
+
+export type TDialog = {
+    id: string;
+    name: string
+}
+
+export type TDialogsPage = {
+    messages: Array<TMessage>
+    dialogs: Array<TDialog>
+    newMessageText: string
+}
+
+export type TMessage = {
+    id: string;
+    message: string
+}
 
 const initialState: TDialogsPage = {
     messages: [
@@ -19,7 +35,7 @@ const initialState: TDialogsPage = {
     newMessageText: 'new message!'
 }
 
-const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes) => {
+const dialogsReducer = (state: TDialogsPage = initialState, action: DialogsActionTypes) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT: {
             return {
@@ -45,5 +61,22 @@ const dialogsReducer = (state: TDialogsPage = initialState, action: ActionTypes)
             return state;
     }
 }
+
+export const sendMessageAC = () => {
+    return {
+        type: SEND_MESSAGE,
+    } as const
+}
+
+export const updateNewMessageTextAC = (messageText: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText: messageText,
+    } as const
+}
+
+export type  DialogsActionTypes =
+    ReturnType<typeof updateNewMessageTextAC> |
+    ReturnType<typeof sendMessageAC>
 
 export default dialogsReducer;
