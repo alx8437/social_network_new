@@ -2,18 +2,15 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 
-type UserLocationType = {
-    city: string,
-    country: string
-}
-
 export type UserType = {
     id: number,
     followed: boolean,
-    fullName: string,
-    status: string,
-    location: UserLocationType
-    photoUrl: string
+    name: string,
+    status: string | null,
+    photos: {
+        small: string | null,
+        large: string | null
+    }
 }
 
 type UserStateType = {

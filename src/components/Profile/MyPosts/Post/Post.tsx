@@ -1,5 +1,5 @@
 import styles from "./Post.module.css";
-import avatar from '../../../../assets/images/avatar.jpg'
+import avatar from '../../../../assets/images/avatar.png'
 import {FC} from "react";
 
 type PostPropsType = {
