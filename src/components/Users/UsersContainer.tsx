@@ -9,7 +9,9 @@ import {
     unfollowAC,
     UserType
 } from "../../redux/usersReducer";
-import Users from "./Users";
+import React from "react";
+import axios from "axios";
+import {Users} from "./Users";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -55,6 +57,50 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-const UserContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(Users)
+type UsersPropsType = {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    setUsers: (users: Array<UserType>) => void
+    setCurrentPage: (page: number) => void
+    setTotalUsersCount: (totalUsersCount: number) => void
+}
+
+class UsersContainer extends React.Component<UsersPropsType> {
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setTotalUsersCount(response.data.totalCount)
+        })
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+        })
+    }
+
+    render() {
+
+        return (
+            <Users
+                users={this.props.users}
+                pageSize={this.props.pageSize}
+                totalUsersCount={this.props.totalUsersCount}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                unfollow={this.props.unfollow}
+                follow={this.props.follow}
+            />
+        );
+    }
+}
+
+
+const UserContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(UsersContainer)
 
 export default UserContainer;
