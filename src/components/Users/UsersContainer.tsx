@@ -5,19 +5,21 @@ import {
     followAC,
     setCurrentPageAC,
     setTotalUsersCountAC,
-    setUsersAC,
+    setUsersAC, toggleIsFetchingAC,
     unfollowAC,
     UserType
 } from "../../redux/usersReducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
+import preloader from "../../assets/images/preloader.gif"
 
 type MapStateToPropsType = {
     users: UserType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -26,6 +28,7 @@ type MapDispatchToPropsType = {
     setUsers: (users: UserType[]) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
+    toggleIsFetching: (isFetching: boolean) => void
 }
 
 const mapStateToProps = (state: AppStateType) => {
@@ -33,7 +36,8 @@ const mapStateToProps = (state: AppStateType) => {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
 
@@ -53,6 +57,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
         setTotalUsersCount: (totalUsersCount: number) => {
             dispatch(setTotalUsersCountAC(totalUsersCount))
+        },
+        toggleIsFetching: (isFetching: boolean) => {
+            dispatch(toggleIsFetchingAC(isFetching))
         }
     }
 }
@@ -67,6 +74,7 @@ type UsersPropsType = {
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
+    isFetching: boolean
 }
 
 class UsersContainer extends React.Component<UsersPropsType> {
@@ -87,15 +95,18 @@ class UsersContainer extends React.Component<UsersPropsType> {
     render() {
 
         return (
-            <Users
-                users={this.props.users}
-                pageSize={this.props.pageSize}
-                totalUsersCount={this.props.totalUsersCount}
-                currentPage={this.props.currentPage}
-                onPageChanged={this.onPageChanged}
-                unfollow={this.props.unfollow}
-                follow={this.props.follow}
-            />
+            <>
+                {this.props.isFetching && <img src={preloader} alt={'loading...'}/>}
+                <Users
+                    users={this.props.users}
+                    pageSize={this.props.pageSize}
+                    totalUsersCount={this.props.totalUsersCount}
+                    currentPage={this.props.currentPage}
+                    onPageChanged={this.onPageChanged}
+                    unfollow={this.props.unfollow}
+                    follow={this.props.follow}
+                />
+            </>
         );
     }
 }
