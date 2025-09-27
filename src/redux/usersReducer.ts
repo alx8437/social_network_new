@@ -26,10 +26,10 @@ type UserStateType = {
 
 const initialState: UserStateType = {
     users: [],
-    pageSize: 100,
+    pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: false
 }
 
 type UsersActionsType =
