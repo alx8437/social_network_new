@@ -4,13 +4,12 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {ProfileType, setUserProfile} from "../../redux/profileReducer";
 import {AppStateType} from "../../redux/store";
-import {Preloader} from "../common/Preloader/Preloader";
 
-type MapStateToProps = {
+type MapStateToPropsType = {
     profile: ProfileType | null,
 }
 
-type MapDispatchPropsType = {
+type MapDispatchToPropsType = {
     setUserProfile: (profile: ProfileType) => void;
 }
 
@@ -18,10 +17,7 @@ const mapStateToProps = (state: AppStateType) => ({
     profile: state.profilePage.profile
 })
 
-type ProfileContainerPropsType = {
-    profile: ProfileType | null
-    setUserProfile: (profile: ProfileType) => void;
-}
+type ProfileContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
@@ -31,12 +27,8 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     }
 
     render() {
-        if (!this.props.profile) {
-            return <Preloader />
-        }
-
         return <Profile {...this.props} profile={this.props.profile}  />;
     }
 }
 
-export default connect<MapStateToProps, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {setUserProfile})(ProfileContainer);
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {setUserProfile})(ProfileContainer);

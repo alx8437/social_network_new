@@ -3,13 +3,19 @@ import styles from "./ProfileInfo.module.css";
 import content from "../../../assets/images/content.jpg";
 import {ProfileType} from "../../../redux/profileReducer";
 import defaultAvatar from "../../../assets/images/defaultAvatar.png";
+import {Preloader} from "../../common/Preloader/Preloader";
 
 type ProfileInfoPropsType = {
-    profile: ProfileType
+    profile: ProfileType | null
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
     const {profile} = props;
+
+    if (!profile) {
+        return <Preloader />
+    }
+
     const photo = profile.photos.small ? profile.photos.small : defaultAvatar
 
     return (
