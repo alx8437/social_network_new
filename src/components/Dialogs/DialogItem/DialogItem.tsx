@@ -12,7 +12,7 @@ const DialogItem = (props: DialogItemProps) => {
     return (
         <div className={styles.dialogsItem}>
             <div className={styles.avatar}>Ava</div>
-            <NavLink className={({isActive}) => isActive ? `${styles.dialog} ${styles.active}` : styles.dialog}
+            <NavLink activeClassName={`${styles.dialog} ${styles.active}`} className={styles.dialog}
                      to={id}>{name}
             </NavLink>
     </div>)
