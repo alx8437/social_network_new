@@ -93,7 +93,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-
 const UserContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
     follow,
     unfollow,

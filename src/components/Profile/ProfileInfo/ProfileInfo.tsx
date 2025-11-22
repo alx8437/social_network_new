@@ -25,6 +25,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             </div>
             <div className={styles.description}>
                 <img src={photo} alt={'avatar'} />
+                {profile.fullName}
                 ava + description
             </div>
         </>
