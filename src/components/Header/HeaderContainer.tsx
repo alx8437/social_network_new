@@ -4,9 +4,8 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {AuthType, setAuthUserData} from "../../redux/authReducer";
+import {instance} from "../../common/api";
 
-const TOKEN = '1d420fcc-a139-409e-9feb-dfa7a2bcc2f6'
-const API_KEY ='6b9c4cb8-f5dd-4538-b450-c4a8c6342a0a'
 
 type HeaderContainerPropsType = {
     setAuthUserData: (userData: AuthType) => void
@@ -16,17 +15,11 @@ type HeaderContainerPropsType = {
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            headers: {
-                Authorization: `Bearer ${TOKEN}`,
-                'API-KEY': API_KEY
-            }
-        }).then(res => {
+        instance.get(`/auth/me`).then(res => {
             if (res.data.resultCode === 0) {
                this.props.setAuthUserData(res.data.data)
             }
         })
-
     }
 
 
