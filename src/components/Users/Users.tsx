@@ -3,6 +3,7 @@ import avatar from "../../assets/images/defaultAvatar.png";
 import React, {FC} from "react";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
+import {instance} from "../../common/api";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -53,9 +54,22 @@ export const Users: FC<UsersPropsType> = ({
                             </div>
                             <div>
                                 {user.followed ? <button
-                                    onClick={() => unfollow(user.id)}>
+                                    onClick={() => {
+                                        instance.delete(`/follow/${user.id}`).then(res => {
+                                            if (res.data.resultCode === 0) {
+                                                unfollow(user.id)
+                                            }
+                                        })
+                                    }}>
                                     Unfollow
-                                </button> : <button onClick={() => follow(user.id)}>Follow</button>}
+                                </button> : <button
+                                    onClick={() => {
+                                        instance.post(`/follow/${user.id}`).then(res => {
+                                           if (res.data.resultCode === 0) {
+                                               follow(user.id)
+                                           }
+                                        })
+                                    }}>Follow</button>}
                             </div>
                         </span>
                 <span>
