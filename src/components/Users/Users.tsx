@@ -3,7 +3,7 @@ import avatar from "../../assets/images/defaultAvatar.png";
 import React, {FC} from "react";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {instance} from "../../common/api";
+import { usersAPI} from "../../common/api";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -36,7 +36,7 @@ export const Users: FC<UsersPropsType> = ({
         <div>
             {pages.map(p =>
                 <span
-                    onClick={(e) => onPageChanged(p)}
+                    onClick={() => onPageChanged(p)}
                     className={currentPage === p ? styles.selectedPage : ''}>{p}
                 </span>)}
         </div>
@@ -55,8 +55,8 @@ export const Users: FC<UsersPropsType> = ({
                             <div>
                                 {user.followed ? <button
                                     onClick={() => {
-                                        instance.delete(`/follow/${user.id}`).then(res => {
-                                            if (res.data.resultCode === 0) {
+                                        usersAPI.unfollowUser(user.id).then(data => {
+                                            if (data.resultCode === 0) {
                                                 unfollow(user.id)
                                             }
                                         })
@@ -64,8 +64,8 @@ export const Users: FC<UsersPropsType> = ({
                                     Unfollow
                                 </button> : <button
                                     onClick={() => {
-                                        instance.post(`/follow/${user.id}`).then(res => {
-                                           if (res.data.resultCode === 0) {
+                                        usersAPI.followUser(user.id).then(data => {
+                                           if (data.resultCode === 0) {
                                                follow(user.id)
                                            }
                                         })

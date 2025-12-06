@@ -1,2 +1,2 @@
 export {instance} from './instance'
-export {getUsers} from './api'
+export {usersAPI, authAPI, profileAPI} from './api'
