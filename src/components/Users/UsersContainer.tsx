@@ -12,7 +12,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {instance} from "../../common/api";
+import {instance, getUsers} from "../../common/api";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -58,7 +58,7 @@ type UsersPropsType = {
 class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        instance.get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        getUsers(this.props.currentPage, this.props.pageSize).then(response => {
             this.props.setUsers(response.data.items)
             this.props.setTotalUsersCount(response.data.totalCount)
             this.props.toggleIsFetching(false)
