@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type UserType = {
     id: number,
@@ -22,6 +23,7 @@ type UserStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    isFollowingProgress: boolean
 }
 
 const initialState: UserStateType = {
@@ -29,7 +31,8 @@ const initialState: UserStateType = {
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    isFollowingProgress: false
 }
 
 type UsersActionsType =
@@ -38,7 +41,8 @@ type UsersActionsType =
     ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setTotalUsersCount> |
-    ReturnType<typeof toggleIsFetching>
+    ReturnType<typeof toggleIsFetching> |
+    ReturnType<typeof toggleIsFollowingProgress>
 
 export const usersReducer = (state: UserStateType = initialState, action: UsersActionsType): UserStateType => {
     switch (action.type) {
@@ -84,6 +88,13 @@ export const usersReducer = (state: UserStateType = initialState, action: UsersA
             }
         }
 
+        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+            return {
+                ...state,
+                isFollowingProgress: action.isFollowingProgress
+            }
+        }
+
         default:
             return {...state}
     }
@@ -95,3 +106,4 @@ export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount} as const)
 export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
+export const toggleIsFollowingProgress = (isFollowingProgress: boolean) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFollowingProgress} as const)

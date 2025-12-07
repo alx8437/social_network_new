@@ -13,6 +13,8 @@ type UsersPropsType = {
     onPageChanged: (p: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
+    isFollowingProgress: boolean
+    toggleIsFollowingProgress: (isFollowingProgress: boolean) => void
 }
 
 export const Users: FC<UsersPropsType> = ({
@@ -22,7 +24,10 @@ export const Users: FC<UsersPropsType> = ({
                                               currentPage,
     onPageChanged,
     follow,
-    unfollow
+    unfollow,
+                                              isFollowingProgress,
+                                              toggleIsFollowingProgress
+
 }) => {
     const pagesCount = Math.ceil(totalUsersCount / pageSize)
 
@@ -55,21 +60,26 @@ export const Users: FC<UsersPropsType> = ({
                             <div>
                                 {user.followed ? <button
                                     onClick={() => {
+                                        toggleIsFollowingProgress(true)
                                         usersAPI.unfollowUser(user.id).then(data => {
                                             if (data.resultCode === 0) {
                                                 unfollow(user.id)
+                                                toggleIsFollowingProgress(false)
                                             }
+
                                         })
-                                    }}>
+                                    }} disabled={isFollowingProgress}>
                                     Unfollow
                                 </button> : <button
                                     onClick={() => {
+                                        toggleIsFollowingProgress(true)
                                         usersAPI.followUser(user.id).then(data => {
                                            if (data.resultCode === 0) {
                                                follow(user.id)
+                                               toggleIsFollowingProgress(false)
                                            }
                                         })
-                                    }}>Follow</button>}
+                                    }} disabled={isFollowingProgress}>Follow</button>}
                             </div>
                         </span>
                 <span>
