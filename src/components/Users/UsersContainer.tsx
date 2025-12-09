@@ -21,7 +21,7 @@ type MapStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    isFollowingProgress: boolean
+    followingProgress: Array<number>
 }
 
 type MapDispatchToPropsType = {
@@ -31,7 +31,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-    toggleIsFollowingProgress: (isFollowingProgress: boolean) => void
+    toggleIsFollowingProgress: (isFollowingProgress: boolean, userId: number) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -41,7 +41,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        isFollowingProgress: state.usersPage.isFollowingProgress
+        followingProgress: state.usersPage.followingProgress
     }
 }
 
@@ -79,7 +79,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                     onPageChanged={this.onPageChanged}
                     unfollow={this.props.unfollow}
                     follow={this.props.follow}
-                    isFollowingProgress={this.props.isFollowingProgress}
+                    followingProgress={this.props.followingProgress}
                     toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
                 />
             </>
