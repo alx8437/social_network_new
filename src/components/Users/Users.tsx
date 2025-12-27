@@ -11,8 +11,8 @@ type UsersPropsType = {
     users: UserType[]
     currentPage: number
     onPageChanged: (p: number) => void
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
+    followUser: (userId: number) => void
+    unfollowUser: (userId: number) => void
     followingProgress: Array<number>
     toggleIsFollowingProgress: (isFollowingProgress: boolean, userId: number) => void
 }
@@ -23,8 +23,8 @@ export const Users: FC<UsersPropsType> = ({
                                               users,
                                               currentPage,
     onPageChanged,
-    follow,
-    unfollow,
+    followUser,
+    unfollowUser,
                                               followingProgress,
                                               toggleIsFollowingProgress
 
@@ -41,6 +41,7 @@ export const Users: FC<UsersPropsType> = ({
         <div>
             {pages.map(p =>
                 <span
+                    key={p}
                     onClick={() => onPageChanged(p)}
                     className={currentPage === p ? styles.selectedPage : ''}>{p}
                 </span>)}
@@ -59,27 +60,12 @@ export const Users: FC<UsersPropsType> = ({
                             </div>
                             <div>
                                 {user.followed ? <button
-                                    onClick={() => {
-                                        toggleIsFollowingProgress(true, user.id)
-                                        usersAPI.unfollowUser(user.id).then(data => {
-                                            if (data.resultCode === 0) {
-                                                unfollow(user.id)
-                                                toggleIsFollowingProgress(false, user.id)
-                                            }
-
-                                        })
-                                    }} disabled={followingProgress.some(id => id === user.id)}>
+                                    onClick={() => unfollowUser(user.id)}
+                                    disabled={followingProgress.some(id => id === user.id)}>
                                     Unfollow
                                 </button> : <button
-                                    onClick={() => {
-                                        toggleIsFollowingProgress(true, user.id)
-                                        usersAPI.followUser(user.id).then(data => {
-                                           if (data.resultCode === 0) {
-                                               follow(user.id)
-                                               toggleIsFollowingProgress(false, user.id)
-                                           }
-                                        })
-                                    }} disabled={followingProgress.some(id => id === user.id)}>Follow</button>}
+                                    onClick={() => followUser(user.id)}
+                                    disabled={followingProgress.some(id => id === user.id)}>Follow</button>}
                             </div>
                         </span>
                 <span>

@@ -7,7 +7,7 @@ import {
     setUsers,
     unfollow,
     toggleIsFollowingProgress,
-    UserType, getUsersTC
+    UserType, getUsers, followUser, unfollowUser
 } from "../../redux/usersReducer";
 import React from "react";
 import {Users} from "./Users";
@@ -23,11 +23,11 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
+    followUser: (userId: number) => void
+    unfollowUser: (userId: number) => void
     setCurrentPage: (page: number) => void
     toggleIsFollowingProgress: (isFollowingProgress: boolean, userId: number) => void
-    getUsersTC: (currentPage: number, pageSize: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -45,12 +45,12 @@ type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
-        this.props.getUsersTC(pageNumber, this.props.pageSize)
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -64,8 +64,8 @@ class UsersContainer extends React.Component<UsersPropsType> {
                     totalUsersCount={this.props.totalUsersCount}
                     currentPage={this.props.currentPage}
                     onPageChanged={this.onPageChanged}
-                    unfollow={this.props.unfollow}
-                    follow={this.props.follow}
+                    unfollowUser={this.props.unfollowUser}
+                    followUser={this.props.followUser}
                     followingProgress={this.props.followingProgress}
                     toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
                 />
@@ -75,11 +75,11 @@ class UsersContainer extends React.Component<UsersPropsType> {
 }
 
 const UserContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-    follow,
-    unfollow,
+    followUser,
+    unfollowUser,
     setCurrentPage,
     toggleIsFollowingProgress,
-    getUsersTC
+    getUsers
 })(UsersContainer)
 
 export default UserContainer;
