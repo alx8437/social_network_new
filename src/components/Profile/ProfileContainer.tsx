@@ -7,6 +7,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 
 type MapStateToPropsType = {
     profile: ProfileType | null,
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -21,8 +22,9 @@ type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
-const mapStateToProps = (state: AppStateType) => ({
-    profile: state.profilePage.profile
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 class ProfileContainer extends React.Component<PropsType> {

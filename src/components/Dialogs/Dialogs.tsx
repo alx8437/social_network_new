@@ -3,11 +3,13 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import styles from './Dialogs.module.css'
 import {TDialogsPage} from "../../redux/dialogsReducer";
+import {Redirect} from "react-router-dom";
 
 type TDialogPropsType = {
     dialogsPage: TDialogsPage
     onChangeMessage: (text: string) => void
     sendMessage: () => void
+    isAuth: boolean
 }
 
 const Dialogs:FC<TDialogPropsType> = (
@@ -15,7 +17,10 @@ const Dialogs:FC<TDialogPropsType> = (
         dialogsPage,
         onChangeMessage,
         sendMessage,
+        isAuth
     }) => {
+
+    if (!isAuth) return <Redirect to={'/login'} />
 
     const dialogsElements = dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
     const messagesData = dialogsPage.messages.map(message => <Message message={message.message} key={message.id} />)

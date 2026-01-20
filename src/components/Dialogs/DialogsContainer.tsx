@@ -6,6 +6,7 @@ import {sendMessageAC, TDialogsPage, updateNewMessageTextAC} from "../../redux/d
 
 type MapStateToPropsType = {
     dialogsPage: TDialogsPage
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -15,7 +16,8 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 
